@@ -12,7 +12,6 @@ public class BooksStoreTests extends TestBase {
     @WithLogin
     @DisplayName("Удаление книги из списка на странице профиля пользователя")
     public void DeleteBookFromTheList() {
-
         book.addBookToProfile();
         profilePage
                 .openPage()
