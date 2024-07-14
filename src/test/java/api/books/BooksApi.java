@@ -1,6 +1,7 @@
 package api.books;
 
 import api.authorization.AuthorizationApi;
+import data.TestData;
 import io.qameta.allure.Step;
 import models.AddBookRequestModel;
 
@@ -10,15 +11,15 @@ import static io.restassured.RestAssured.given;
 import static specs.DemoqaSpec.*;
 
 public class BooksApi {
+    TestData data = new TestData();
 
     @Step("Добавление книги через API")
     public void addBookToProfile() {
         String userID = AuthorizationApi.extactValueFromCookieString("userID");
         String token = AuthorizationApi.extactValueFromCookieString("token");
         AddBookRequestModel bookData = new AddBookRequestModel();
-        AddBookRequestModel.Isbn isbnNum = new AddBookRequestModel.Isbn();
         bookData.setUserId(userID);
-        bookData.setCollectionOfIsbns(List.of(isbnNum));
+        bookData.setIsbn(data.isbn);
 
         given(requestSpec)
                 .header("Authorization", "Bearer " + token)

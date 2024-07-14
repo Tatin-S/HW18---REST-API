@@ -2,16 +2,20 @@ package models;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class AddBookRequestModel {
 
-    private String userId;
-    private List<Isbn> collectionOfIsbns;
+    public String userId;
+    private ArrayList<IsbnValue> collectionOfIsbns;
 
-    @Data
-    public static class Isbn {
-        private String isbn;
+    public void setIsbn(String value) {
+        IsbnValue isbn = new IsbnValue();
+        isbn.setIsbn(value);
+        ArrayList<IsbnValue> isbnData = new ArrayList<>();
+        isbnData.add(isbn);
+        this.collectionOfIsbns = isbnData;
     }
 }
