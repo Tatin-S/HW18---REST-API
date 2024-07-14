@@ -8,7 +8,6 @@ public class LoginExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext context) {
-
-        AuthorizationApi.addCookies();
+        AuthorizationApi.setCookiesInBrowser(AuthorizationApi.login());
     }
 }

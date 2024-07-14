@@ -1,4 +1,5 @@
 package tests;
+
 import api.books.BooksApi;
 import helpers.WithLogin;
 import org.junit.jupiter.api.*;
@@ -11,12 +12,11 @@ public class BooksStoreTests extends TestBase {
     @WithLogin
     @DisplayName("Удаление книги из списка на странице профиля пользователя")
     public void DeleteBookFromTheList() {
-        String isbn = "9781491904244";
 
-        book.addBookToProfile(isbn);
+        book.addBookToProfile();
         profilePage
                 .openPage()
-                .checkBookIsInProfile(isbn)
+                .checkBookIsInProfile()
                 .deleteBook()
                 .checkBookIsDeleted();
     }

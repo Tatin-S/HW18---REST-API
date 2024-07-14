@@ -1,10 +1,11 @@
 package api.authorization;
 
+import com.codeborne.selenide.WebDriverRunner;
+import data.TestData;
 import io.qameta.allure.Step;
 import models.LoginRequestModel;
 import models.LoginResponseModel;
 import org.openqa.selenium.Cookie;
-import properties.SystemProperties;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -13,18 +14,12 @@ import static specs.DemoqaSpec.*;
 
 public class AuthorizationApi {
 
-    private static final String login = SystemProperties.login,
-            password = SystemProperties.password;
-
-    public static final String USER_ID = "userID",
-            TOKEN = "token",
-            EXPIRES = "expires";
-
     @Step("Авторизация на сайте")
     public static LoginResponseModel login() {
+        TestData authData = new TestData();
         LoginRequestModel loginData = new LoginRequestModel();
-        loginData.setUserName(login);
-        loginData.setPassword(password);
+        loginData.setUserName(authData.login);
+        loginData.setPassword(authData.pass);
 
         return given(requestSpec)
                 .body(loginData)
@@ -35,17 +30,17 @@ public class AuthorizationApi {
                 .extract().as(LoginResponseModel.class);
     }
 
-    @Step("Установка cookies")
-    public static void addCookies() {
+    @Step("Авторизация пользователя")
+    public static void setCookiesInBrowser(LoginResponseModel loginResponse) {
         open("/favicon.ico");
-        LoginResponseModel loginResponseData = login();
-        getWebDriver().manage().addCookie(new Cookie(USER_ID, loginResponseData.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie(TOKEN, loginResponseData.getToken()));
-        getWebDriver().manage().addCookie(new Cookie(EXPIRES, loginResponseData.getExpires()));
+        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
+        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+        getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
+        open("");
     }
 
-    @Step("Получение cookie")
-    public static String getCookieByName(String cookie) {
-        return getWebDriver().manage().getCookieNamed(cookie).getValue();
+    public static String extactValueFromCookieString(String value) {
+        String cookieValue = String.valueOf(WebDriverRunner.getWebDriver().manage().getCookieNamed(value));
+        return cookieValue.substring(cookieValue.indexOf("=") + 1, cookieValue.indexOf(";"));
     }
 }

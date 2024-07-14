@@ -1,4 +1,3 @@
-
 package tests;
 
 import com.codeborne.selenide.Configuration;
@@ -18,10 +17,11 @@ public class TestBase {
 
     @BeforeAll
     static void setup() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
         RestAssured.baseURI = "https://demoqa.com";
-        Configuration.browser = System.getProperty("browser", "chrome");
+/*        Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserSize = System.getProperty("browserSize", "1280x1024");
         Configuration.browserVersion = System.getProperty("browserVersion", "123.0");
         Configuration.timeout = 10000;
@@ -31,7 +31,7 @@ public class TestBase {
                 + System.getProperty("pass")
                 + "@"
                 + System.getProperty("host")
-                + "/wd/hub";
+                + "/wd/hub";*/
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -40,14 +40,14 @@ public class TestBase {
         ));
 
         Configuration.browserCapabilities = capabilities;
-
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
     @AfterEach
     void afterEach() {
         Attachments.screenshotAs("Last step screenshot");
         Attachments.pageSource();
+        Attachments.browserConsoleLogs();
+        Attachments.addVideo();
         closeWebDriver();
     }
 }
