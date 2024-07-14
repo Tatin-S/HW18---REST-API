@@ -21,7 +21,7 @@ public class ProfilePage {
         String userID = AuthorizationApi.extactValueFromCookieString("userID");
         open("/profile");
         booksListTitle.shouldHave(text("Books : "));
-        userName.shouldHave(text(userID));
+        userName.shouldHave(text(data.login));
         return this;
     }
 

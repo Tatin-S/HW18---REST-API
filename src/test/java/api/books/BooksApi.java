@@ -5,8 +5,6 @@ import data.TestData;
 import io.qameta.allure.Step;
 import models.AddBookRequestModel;
 
-import java.util.List;
-
 import static io.restassured.RestAssured.given;
 import static specs.DemoqaSpec.*;
 
