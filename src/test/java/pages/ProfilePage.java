@@ -18,7 +18,6 @@ public class ProfilePage {
 
     @Step("Открытие профиля")
     public ProfilePage openPage() {
-        String userID = AuthorizationApi.extactValueFromCookieString("userID");
         open("/profile");
         booksListTitle.shouldHave(text("Books : "));
         userName.shouldHave(text(data.login));
