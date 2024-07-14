@@ -22,16 +22,17 @@ public class TestBase {
         Configuration.pageLoadStrategy = "eager";
         RestAssured.baseURI = "https://demoqa.com";
         Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserSize = System.getProperty("browserSize", "1280x1024");
-        Configuration.browserVersion = System.getProperty("browserVersion", "123.0");
-        Configuration.timeout = 10000;
-        Configuration.remote = "https://"
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.browserVersion = System.getProperty("browserVersion", "121");
+       // Configuration.timeout = 10000;
+        Configuration.remote = "https://user1:1234@"+ System.getProperty("selenoid","selenoid.autotests.cloud")+"/wd/hub";
+       /* Configuration.remote = "https://"
                 + System.getProperty("login")
                 + ":"
                 + System.getProperty("pass")
                 + "@"
                 + System.getProperty("host")
-                + "/wd/hub";
+                + "/wd/hub";*/
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
