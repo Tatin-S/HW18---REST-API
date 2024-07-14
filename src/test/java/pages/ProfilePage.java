@@ -1,5 +1,5 @@
 package pages;
-import api.authorization.AuthorizationApi;
+
 import com.codeborne.selenide.SelenideElement;
 import data.TestData;
 import io.qameta.allure.Step;
