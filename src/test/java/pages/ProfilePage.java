@@ -14,19 +14,23 @@ public class ProfilePage {
             deleteButton = $("#delete-record-undefined"),
             confirmButton = $("#closeSmallModal-ok"),
             listEmptyLabel = $(".rt-noData");
-            TestData data = new TestData();
 
     @Step("Открытие профиля")
     public ProfilePage openPage() {
         open("/profile");
+        return this;
+    }
+
+    @Step("Проверяем, что зашли под заданным пользователем")
+    public ProfilePage checkNameProfile(String login) {
         booksListTitle.shouldHave(text("Books : "));
-        userName.shouldHave(text(data.login));
+        userName.shouldHave(text(login));
         return this;
     }
 
     @Step("Проверем, что книга есть в корзине")
-    public ProfilePage checkBookIsInProfile() {
-        $("a[href*='/profile?book=" + data.isbn + "']").should(exist);
+    public ProfilePage checkBookIsInProfile(String isbn) {
+        $("a[href*='/profile?book=" + isbn + "']").should(exist);
         return this;
     }
 

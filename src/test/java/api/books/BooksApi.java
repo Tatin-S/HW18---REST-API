@@ -9,15 +9,14 @@ import static io.restassured.RestAssured.given;
 import static specs.DemoqaSpec.*;
 
 public class BooksApi {
-    TestData data = new TestData();
 
     @Step("Добавление книги через API")
-    public void addBookToProfile() {
+    public void addBookToProfile(String isbn) {
         String userID = AuthorizationApi.extactValueFromCookieString("userID");
         String token = AuthorizationApi.extactValueFromCookieString("token");
         AddBookRequestModel bookData = new AddBookRequestModel();
         bookData.setUserId(userID);
-        bookData.setIsbn(data.isbn);
+        bookData.setIsbn(isbn);
 
         given(requestSpec)
                 .header("Authorization", "Bearer " + token)

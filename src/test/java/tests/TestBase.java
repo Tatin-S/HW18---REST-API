@@ -7,6 +7,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
@@ -17,14 +18,13 @@ public class TestBase {
 
     @BeforeAll
     static void setup() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
         RestAssured.baseURI = "https://demoqa.com";
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
         Configuration.browserVersion = System.getProperty("browserVersion", "121");
-       Configuration.remote = "https://"
+        Configuration.remote = "https://"
                 + System.getProperty("login")
                 + ":"
                 + System.getProperty("pass")
@@ -39,6 +39,11 @@ public class TestBase {
         ));
 
         Configuration.browserCapabilities = capabilities;
+    }
+
+    @BeforeEach
+    void beforeEach(){
+        SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @AfterEach
