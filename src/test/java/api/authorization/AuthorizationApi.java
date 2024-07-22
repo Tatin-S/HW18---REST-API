@@ -1,10 +1,11 @@
 package api.authorization;
 
 import com.codeborne.selenide.WebDriverRunner;
-import data.TestData;
+import config.TestDataConfig;
 import io.qameta.allure.Step;
 import models.LoginRequestModel;
 import models.LoginResponseModel;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -13,13 +14,13 @@ import static io.restassured.RestAssured.given;
 import static specs.DemoqaSpec.*;
 
 public class AuthorizationApi {
+    static final TestDataConfig testDataConfig = ConfigFactory.create(TestDataConfig.class, System.getProperties());
 
-    @Step("Авторизация на сайте")
+    @Step("Login Авторизация на сайте")
     public static LoginResponseModel login() {
-        TestData authData = new TestData();
         LoginRequestModel loginData = new LoginRequestModel();
-        loginData.setUserName(authData.login);
-        loginData.setPassword(authData.pass);
+        loginData.setUserName(testDataConfig.userLogin());
+        loginData.setPassword(testDataConfig.userPassword());
 
         return given(requestSpec)
                 .body(loginData)

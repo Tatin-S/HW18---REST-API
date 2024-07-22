@@ -1,24 +1,25 @@
 package tests;
 
 import api.books.BooksApi;
-import data.TestData;
+import config.TestDataConfig;
 import helpers.WithLogin;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.*;
 import pages.ProfilePage;
 public class BooksStoreTests extends TestBase {
     private final ProfilePage profilePage = new ProfilePage();
     private final BooksApi book = new BooksApi();
-    TestData data = new TestData();
+    static final TestDataConfig testDataConfig = ConfigFactory.create(TestDataConfig.class, System.getProperties());
 
     @Test
     @WithLogin
-    @DisplayName("Удаление книги из списка на странице профиля пользователя")
+    @DisplayName("Delete Удаление книги из списка на странице профиля пользователя")
     public void DeleteBookFromTheList() {
-        book.addBookToProfile(data.isbn);
+        book.addBookToProfile(testDataConfig.isbn());
         profilePage
                 .openPage()
-                .checkNameProfile(data.login)
-                .checkBookIsInProfile(data.isbn)
+                .checkNameProfile(testDataConfig.userLogin())
+                .checkBookIsInProfile(testDataConfig.isbn())
                 .deleteBook()
                 .checkBookIsDeleted();
     }

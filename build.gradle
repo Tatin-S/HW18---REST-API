@@ -7,6 +7,9 @@ plugins {
 repositories {
     mavenCentral()
 }
+compileJava {
+    options.encoding = 'UTF-8'
+}
 
 compileTestJava {
     options.encoding = 'UTF-8'
@@ -39,6 +42,7 @@ dependencies {
             "com.codeborne:selenide:7.2.3",
             'org.slf4j:slf4j-simple:2.0.13',
             "org.assertj:assertj-core:3.26.0",
+            "org.aeonbits.owner:owner:1.0.12"
     )
 }
 

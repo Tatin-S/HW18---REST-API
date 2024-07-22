@@ -1,7 +1,6 @@
 package api.books;
 
 import api.authorization.AuthorizationApi;
-import data.TestData;
 import io.qameta.allure.Step;
 import models.AddBookRequestModel;
 
